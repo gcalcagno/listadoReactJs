@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Listado React Js</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header pull-left">
+        <a class="navbar-brand " href="#">
+          <img src="img/logo.png">
+          Giannina Calcagno
+        </a>
+      </div>
+      <img class="pull-right" src="img/logo-react.svg" width="125px">
+    </div>
+  </div>
+
+  <div class="container">
+    <main id="title"></main>
+    <main id="app"></main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+  
+  <script type="text/babel">
+
+
+    // ******** Titulo ******** //
+    //Componente Hola
+    function Hola(props) {
+      return (
+        <h1 id="Title" onClick={props.onClick}>
+          {props.name} {props.count}
+        </h1>
+      );
+    }
+
+    //Componente Titulo
+    class Titulo extends React.Component {
+      //Constructor Recibe Props
+      constructor(props) {
+        super(props);
+      }
+      //Render
+      render() {
+        return (
+          //Componente Hola
+          <Hola
+            name={this.props.name}
+          />
+        );
+      }
+    }
+    // ******** Titulo ******** //
+    
+
+
+
+    // ******** Listado ******** //
+
+    //Componente ItemRow
+    class ItemRow extends React.Component {
+      render() {
+        var titulo = this.props.item.titulo;
+        var institucion = this.props.item.institucion;
+        var fecha = this.props.item.fecha;
+        var estado = this.props.item.estado;
+
+        return (
+          <tr>
+            <td>{titulo}</td>
+            <td>{institucion}</td>
+            <td>{fecha}</td>
+            <td>{estado}</td>
+          </tr>
+        );
+      }
+    }
+
+
+    //Componente ItemTabla
+    class ItemTabla extends React.Component {
+      render() {
+        var rows = [];
+        this.props.items.forEach((item) => {
+          rows.push(<ItemRow item={item} key={item.titulo} />);
+        });
+        return (
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Titulo</th>
+                <th>Institución</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </table>
+        );
+      }
+    }
+
+    //Componente Lista
+    class Lista extends React.Component {
+      constructor(props) {
+        super(props);
+      }
+
+
+      render() {
+        return (
+          <div>
+            <ItemTabla
+              items={this.props.items}
+            />
+          </div>
+        );
+      }
+    }
+    // ******** Listado ******** //
+
+
+    //Listado
+    var LISTA = [
+      {
+        titulo: 'Analista de Sistemas', 
+        institucion: 'CAEDI (Centro de Altos Estudios en Informática)', 
+        fecha: '2015 / Presente', 
+        estado: 'En curso.',
+        img: 'icon-php-python.png'
+      },
+      {
+        titulo: 'React JS', 
+        institucion: 'PLATZI', 
+        fecha: '2017', 
+        estado: 'Graduado',
+        img: 'icon-react.png'
+      },
+      {
+        titulo: 'Angular JS', 
+        institucion: 'PLATZI', 
+        fecha: '2017', 
+        estado: 'Graduado',
+        img: 'icon-angular.png'
+      },
+      {
+        titulo: 'UX - Experiencia de Usuario', 
+        institucion: 'PLATZI', 
+        fecha: '2016', 
+        estado: 'Graduado',
+        img: 'icon-ux.png'
+      },
+      {
+        titulo: 'JAVA', 
+        institucion: 'Escuela Da Vinci', 
+        fecha: '2014', 
+        estado: 'Graduado',
+        img: 'icon-java.png'
+      },
+      {
+        titulo: 'Aplicaciones en Mobile', 
+        institucion: 'UTN (Universidad Tecnológica Nacional)', 
+        fecha: '2014', 
+        estado: 'Graduado',
+        img: 'icon-aplicaciones.png'
+      },
+      {
+        titulo: 'Marketing Digital', 
+        institucion: 'UCES (Universidad de Ciencias Empresariales y Sociales)', 
+        fecha: '2014', 
+        estado: 'Graduado',
+        img: 'icon-marketing.png'
+      },
+      {
+        titulo: 'Adwords', 
+        institucion: ' EDUCACIÓN IT', 
+        fecha: '2014', 
+        estado: 'Graduado',
+        img: 'icon-adwords.png'
+      },
+      {
+        titulo: 'Programador Web', 
+        institucion: ' UTN (Universidad Tecnológica Nacional)', 
+        fecha: '2013', 
+        estado: 'Graduado',
+        img: 'icon-programador.png'
+      },
+      {
+        titulo: 'Profesional Web Master', 
+        institucion: 'UTN (Universidad Tecnológica Nacional)', 
+        fecha: '2013', 
+        estado: 'Graduado',
+        img: 'icon-maqueta.png'
+      },
+      {
+        titulo: 'Posicionamiento web SEO', 
+        institucion: ' EDUCACIÓN IT', 
+        fecha: '2012/2013', 
+        estado: 'Graduado',
+        img: 'icon-seo.png'
+      },
+      {
+        titulo: 'Desarrollo Web Integral', 
+        institucion: 'CETAE', 
+        fecha: '2011/2012', 
+        estado: 'Graduado',
+        img: 'icon-code.png'
+      }
+    ];
+
+
+    //Render Mi Componente en elemento id="app"
+
+
+    let componentes = (
+      <div>
+        <Titulo name="Estudios" />
+        <Lista items={LISTA} />
+      </div>
+    );
+
+    ReactDOM.render(componentes, document.getElementById("app"));
+
+
+  </script>
+</body>
+</html>
