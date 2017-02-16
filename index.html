@@ -34,17 +34,18 @@
   <script type="text/babel">
 
 
-    // ******** Titulo ******** //
-    //Componente Hola
-    function Hola(props) {
+    
+    //*** Componente TituloH1
+    function TituloH1(props) {
       return (
         <h1 id="Title" onClick={props.onClick}>
           {props.name} {props.count}
         </h1>
       );
     }
+    //***
 
-    //Componente Titulo
+    //*** Componente Titulo
     class Titulo extends React.Component {
       //Constructor Recibe Props
       constructor(props) {
@@ -53,19 +54,18 @@
       //Render
       render() {
         return (
-          //Componente Hola
-          <Hola
+          //Componente TituloH1
+          <TituloH1
             name={this.props.name}
           />
         );
       }
     }
-    // ******** Titulo ******** //
+    //***
     
 
 
 
-    // ******** Listado ******** //
 
     //Componente ItemRow
     class ItemRow extends React.Component {
@@ -85,13 +85,22 @@
         );
       }
     }
+    //***
 
 
-    //Componente ItemTabla
+
+    //*** Componente ItemTabla
     class ItemTabla extends React.Component {
       render() {
         var rows = [];
+
+        //lista
         this.props.items.forEach((item) => {
+          //lista filtrando
+          if (item.titulo.toLowerCase().indexOf(this.props.filterText.toLowerCase()) === -1 ) {
+            return;
+          }
+          //lista default
           rows.push(<ItemRow item={item} key={item.titulo} />);
         });
         return (
@@ -109,28 +118,77 @@
         );
       }
     }
+    //***
 
-    //Componente Lista
+
+
+    //*** Componente Lista
     class Lista extends React.Component {
       constructor(props) {
         super(props);
+        this.state = {
+          filterText: ''
+        };
+        this.handleUserInput = this.handleUserInput.bind(this);
       }
 
+      handleUserInput(filterText) {
+        this.setState({
+          filterText: filterText
+        });
+      }
 
       render() {
         return (
           <div>
+          <Busqueda
+              filterText={this.state.filterText}
+              onUserInput={this.handleUserInput}
+            />
             <ItemTabla
               items={this.props.items}
+              filterText={this.state.filterText}
             />
           </div>
         );
       }
     }
-    // ******** Listado ******** //
+    //***
 
 
-    //Listado
+
+    //*** Componente Busqueda
+    class Busqueda extends React.Component {
+      constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+      }
+      
+      handleChange() {
+        this.props.onUserInput(
+          this.filterTextInput.value
+        );
+        console.log('cambio');
+      }
+      render() {
+        return (
+          <form>
+            <input
+              type="text"
+              placeholder="Buscar por Titulo..."
+              value={this.props.filterText}
+              ref={(input) => this.filterTextInput = input}
+              onChange={this.handleChange}
+            />
+          </form>
+        );
+      }
+    }
+    //***
+
+
+
+    //*** Listado
     var LISTA = [
       {
         titulo: 'Analista de Sistemas', 
@@ -217,20 +275,18 @@
         img: 'icon-code.png'
       }
     ];
+    //***
 
 
-    //Render Mi Componente en elemento id="app"
-
-
+    //*** Render Componentes en elemento id="app"
     let componentes = (
       <div>
         <Titulo name="Estudios" />
         <Lista items={LISTA} />
       </div>
     );
-
     ReactDOM.render(componentes, document.getElementById("app"));
-
+    //***
 
   </script>
 </body>
